@@ -1,0 +1,13 @@
+@use "variables";
+
+@mixin tablets() {
+    @media screen and (min-width: variables.$tablets-breakpoint) {
+        @content;
+    }
+}
+
+@mixin desktop() {
+    @media screen and (min-width: variables.$desktop-breakpoint) {
+        @content;
+    }
+}
