@@ -1,7 +1,9 @@
 class TodoItem {
-    constructor(desc, finished) {
-        this.description = desc;
+    constructor(desc, prio, finished, dateAdded) {
+        this.descriptionText = desc;
+        this.prio = prio;
         this.finished = finished;
+        this.dateAdded = dateAdded;
     }
 }
 

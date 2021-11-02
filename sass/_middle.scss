@@ -2,21 +2,44 @@
 
 body {
     main {
+        flex-grow: 1;
+
         color: black;
         background-color: rgb(61, 61, 61);
-        flex-grow: 10;
         display: flex;
         justify-content: center;
 
         // TODO ADD SCROLL FOR MIDDLE SECTION
+        height: 100%;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            width: 15px;
+        }
+
+        /* Track */
+        &::-webkit-scrollbar-track {
+            background: rgb(30, 30, 30);
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            background: #666;
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
 
         #tasks-container {
-            width: 100%;
             display: flex;
             flex-direction: column;
+            align-items: center;
 
             @include mixins.tablets {
                 flex-direction: row;
+                align-items: flex-start;
             }
 
             @include mixins.desktop {
@@ -59,10 +82,6 @@ body {
                     flex-direction: column;
                     align-items: center;
 
-                    @include mixins.tablets {
-                        flex-direction: row;
-                    }
-
                     .desc-title {
                         font-size: 0.9rem;
                         padding-right: 5pt;
@@ -72,19 +91,6 @@ body {
                     .desc-text {
                         font-size: 0.9rem;
                         color: white;
-                        overflow-y: scroll;
-                        &::-webkit-scrollbar {
-                            width: 7px;
-                        }
-
-                        &::-webkit-scrollbar-track {
-                            width: 50px;
-                            background-color: rgb(69, 69, 69);
-                        }
-
-                        &::-webkit-scrollbar-thumb {
-                            background-color: rgb(39, 39, 39);
-                        }
                     }
                 }
 
@@ -145,7 +151,7 @@ body {
             }
 
             #current-container {
-                width: 100%;
+                width: 90%;
                 margin: 10pt;
 
                 @include mixins.tablets {
@@ -168,7 +174,7 @@ body {
             }
 
             #finished-container {
-                width: 100%;
+                width: 90%;
                 margin: 10pt;
 
                 @include mixins.tablets {
