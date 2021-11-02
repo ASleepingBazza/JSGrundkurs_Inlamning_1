@@ -9,7 +9,7 @@ body {
 
         #header-container {
             width: 100%;
-            padding: 5pt;
+            padding: 10pt;
             display: flex;
             justify-content: space-between;
 
@@ -35,7 +35,7 @@ body {
                 }
 
                 &:hover {
-                    transform: scale(105%);
+                    transform: scale(110%);
                 }
             }
         }
