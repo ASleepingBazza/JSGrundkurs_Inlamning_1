@@ -1,6 +1,37 @@
 body header {
   color: white;
   background-color: black;
+  display: flex;
+  justify-content: center;
+}
+body header #header-container {
+  width: 100%;
+  padding: 5pt;
+  display: flex;
+  justify-content: space-between;
+}
+@media screen and (min-width: 1200px) {
+  body header #header-container {
+    width: 70%;
+  }
+}
+body header #header-container #addTaskButton {
+  background-color: #46a746;
+  transition: transform 0.1s ease, background-color 0.1s ease;
+  color: white;
+  border: none;
+  border-radius: 4pt;
+  width: 70px;
+  height: 70px;
+}
+body header #header-container #addTaskButton .fas {
+  font-size: 20pt;
+}
+body header #header-container #addTaskButton:active {
+  background-color: #296f29;
+}
+body header #header-container #addTaskButton:hover {
+  transform: scale(105%);
 }
 
 body main {

@@ -1,6 +1,43 @@
+@use "mixins";
+
 body {
     header {
         color: white;
         background-color: black;
+        display: flex;
+        justify-content: center;
+
+        #header-container {
+            width: 100%;
+            padding: 5pt;
+            display: flex;
+            justify-content: space-between;
+
+            @include mixins.desktop {
+                width: 70%;
+            }
+
+            #addTaskButton {
+                background-color: rgb(70, 167, 70);
+                transition: transform 0.1s ease, background-color 0.1s ease;
+                color: white;
+                border: none;
+                border-radius: 4pt;
+                width: 70px;
+                height: 70px;
+
+                .fas {
+                    font-size: 20pt;
+                }
+
+                &:active {
+                    background-color: rgb(41, 111, 41);
+                }
+
+                &:hover {
+                    transform: scale(105%);
+                }
+            }
+        }
     }
 }
