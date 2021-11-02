@@ -12,7 +12,7 @@ body header #header-container {
 }
 @media screen and (min-width: 1200px) {
   body header #header-container {
-    width: 70%;
+    width: 80%;
   }
 }
 body header #header-container #addTaskButton {
@@ -36,8 +36,163 @@ body header #header-container #addTaskButton:hover {
 
 body main {
   color: black;
-  background-color: gray;
+  background-color: #3d3d3d;
   flex-grow: 10;
+  display: flex;
+  justify-content: center;
+}
+body main #tasks-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (min-width: 768px) {
+  body main #tasks-container {
+    flex-direction: row;
+  }
+}
+@media screen and (min-width: 1200px) {
+  body main #tasks-container {
+    width: 80%;
+  }
+}
+body main #tasks-container .task {
+  display: grid;
+  grid-template-areas: "one two three four" "five six seven eight" "nine ten eleven twelve";
+}
+body main #tasks-container .task .complete-button {
+  grid-area: four;
+}
+body main #tasks-container .task .description {
+  grid-area: one/one/span 3/span 2;
+}
+body main #tasks-container .task .other-info {
+  grid-area: seven/seven/span 2/span 2;
+}
+body main #tasks-container .task .trash-button {
+  grid-area: three;
+}
+body main #tasks-container .task {
+  background-color: #585858;
+  border-radius: 4pt;
+}
+body main #tasks-container .task .description {
+  padding: 5pt;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@media screen and (min-width: 768px) {
+  body main #tasks-container .task .description {
+    flex-direction: row;
+  }
+}
+body main #tasks-container .task .description .desc-title {
+  font-size: 0.9rem;
+  padding-right: 5pt;
+  color: #aeaeae;
+}
+body main #tasks-container .task .description .desc-text {
+  font-size: 0.9rem;
+  color: white;
+  overflow-y: scroll;
+}
+body main #tasks-container .task .description .desc-text::-webkit-scrollbar {
+  width: 7px;
+}
+body main #tasks-container .task .description .desc-text::-webkit-scrollbar-track {
+  width: 50px;
+  background-color: #454545;
+}
+body main #tasks-container .task .description .desc-text::-webkit-scrollbar-thumb {
+  background-color: #272727;
+}
+body main #tasks-container .task .complete-button {
+  background-color: #46a746;
+  border-radius: 4pt;
+  margin: 10pt;
+  width: 40px;
+  height: 40px;
+  border: none;
+  transition: transform 0.1s ease, background-color 0.1s ease;
+}
+body main #tasks-container .task .complete-button .fas {
+  color: white;
+}
+body main #tasks-container .task .complete-button:hover {
+  transform: scale(120%);
+}
+body main #tasks-container .task .complete-button:active {
+  background-color: #296f29;
+}
+body main #tasks-container .task .other-info {
+  min-width: 100px;
+  margin: 10pt;
+  display: flex;
+  flex-direction: column;
+  gap: 3pt;
+  font-size: 0.75rem;
+  color: #aeaeae;
+}
+body main #tasks-container .task .trash-button {
+  background-color: #2f2f2f;
+  border-radius: 4pt;
+  border: none;
+  margin: 10pt;
+  width: 40px;
+  height: 40px;
+  transition: transform 0.1s ease, background-color 0.1s ease;
+}
+body main #tasks-container .task .trash-button .fas {
+  color: white;
+}
+body main #tasks-container .task .trash-button:hover {
+  transform: scale(120%);
+}
+body main #tasks-container .task .trash-button:active {
+  background-color: #0c0c0c;
+}
+body main #tasks-container #current-container {
+  width: 100%;
+  margin: 10pt;
+}
+@media screen and (min-width: 768px) {
+  body main #tasks-container #current-container {
+    width: 50%;
+  }
+}
+body main #tasks-container #current-container #current-title {
+  padding: 5pt;
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-size: 1.4rem;
+}
+body main #tasks-container #current-container #current-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 10pt;
+}
+body main #tasks-container #finished-container {
+  width: 100%;
+  margin: 10pt;
+}
+@media screen and (min-width: 768px) {
+  body main #tasks-container #finished-container {
+    width: 50%;
+  }
+}
+body main #tasks-container #finished-container #finished-title {
+  padding: 5pt;
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-size: 1.4rem;
+}
+body main #tasks-container #finished-container #finished-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 10pt;
 }
 
 body footer {
@@ -99,11 +254,22 @@ body footer #footer-container a:hover, body footer #footer-container a:active {
 body {
   padding: 0;
   margin: 0;
-  height: 100vh;
   font-size: 12pt;
   display: flex;
   flex-direction: column;
   font-family: "Roboto", sans-serif;
+}
+body .prio-high {
+  font-weight: bolder;
+  color: #ff8c8c;
+}
+body .prio-mid {
+  font-weight: bold;
+  color: #eecf44;
+}
+body .prio-low {
+  font-weight: normal;
+  color: #82d061;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -5,11 +5,25 @@
 body {
     padding: 0;
     margin: 0;
-    height: 100vh;
 
     font-size: 12pt;
 
     display: flex;
     flex-direction: column;
     font-family: "Roboto", sans-serif;
+
+    .prio-high {
+        font-weight: bolder;
+        color: rgb(255, 140, 140);
+    }
+
+    .prio-mid {
+        font-weight: bold;
+        color: rgb(238, 207, 68);
+    }
+
+    .prio-low {
+        font-weight: normal;
+        color: rgb(130, 208, 97);
+    }
 }
