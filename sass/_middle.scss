@@ -49,14 +49,20 @@ body {
             // LAYOUT
             .task {
                 display: grid;
-                grid-template-columns: 1fr 200px 70px 70px;
+                align-items: center;
+                grid-template-columns: 1fr 1fr 50px 70px;
                 grid-template-rows: 70px 1fr;
                 grid-template-areas:
                     "one two three four"
                     "five six seven eight";
 
-                .complete-button {
+                .complete-button,
+                .undo-button {
                     grid-area: four;
+                }
+
+                .trash-button {
+                    grid-area: three;
                 }
 
                 .description {
@@ -67,17 +73,23 @@ body {
                     grid-area: seven / seven / span 1 / span 2;
                 }
 
-                .trash-button {
-                    grid-area: three;
-                }
+                @include mixins.tablets {
+                    grid-template-columns: 1fr 120px 50px 70px;
+                    .complete-button,
+                    .undo-button {
+                        grid-area: four / four / span 2 / span 1;
+                    }
 
-                @include mixins.desktop {
+                    .trash-button {
+                        grid-area: three / three / span 2 / span 1;
+                    }
+
                     .description {
-                        grid-area: one / one / span 1 / span 1;
+                        grid-area: one / one / span 2 / span 1;
                     }
 
                     .other-info {
-                        grid-area: two / two / span 1 / span 1;
+                        grid-area: two / two / span 2 / span 1;
                     }
                 }
             }
@@ -91,6 +103,7 @@ body {
                     padding: 5pt;
                     display: flex;
                     flex-direction: column;
+                    justify-content: center;
                     align-items: center;
 
                     .desc-title {
@@ -122,13 +135,25 @@ body {
                 }
 
                 .other-info {
-                    margin: 10pt;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
-                    gap: 3pt;
+
+                    margin-bottom: 7pt;
+                    @include mixins.tablets {
+                        margin-bottom: 5pt;
+                        margin-top: 5pt;
+                    }
+
+                    gap: 4pt;
+
                     font-size: 0.75rem;
                     color: rgb(174, 174, 174);
+                    text-align: center;
+
+                    @include mixins.tablets {
+                        text-align: start;
+                    }
                 }
 
                 .trash-button {

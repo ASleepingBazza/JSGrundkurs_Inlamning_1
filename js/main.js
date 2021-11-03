@@ -25,8 +25,6 @@ function createHardcodedTodoList() {
     let todo2 = new TodoItem("Plugga.", "Mid", new Date());
     let todo3 = new TodoItem("Göra en grej.", "Low", new Date());
 
-    todo2.finished = true;
-
     createHTML([todo1, todo2, todo3]);
 }
 
@@ -128,20 +126,15 @@ function createOtherInfo(todoPrio, todoDateAdded, todoDateFinished) {
     // DATE ADDED
     let dateAdded = document.createElement("span");
     dateAdded.className = "date-added";
-
     let date =
         todoDateAdded.getDate() +
         "/" +
-        todoDateAdded.getMonth() +
+        (todoDateAdded.getMonth() + 1) +
         "/" +
         todoDateAdded.getFullYear();
-    let time =
-        todoDateAdded.getHours() +
-        ":" +
-        todoDateAdded.getMinutes() +
-        ":" +
-        todoDateAdded.getSeconds();
-    dateAdded.innerHTML = "Added: " + date + " - " + time;
+
+    let time = todoDateAdded.getHours() + ":" + todoDateAdded.getMinutes();
+    dateAdded.innerHTML = "Added: <br>" + date + " - " + time;
 
     // Add all
     d.appendChild(prio);
@@ -193,7 +186,6 @@ function toggleAction(id) {
     }
 
     if (task != null) {
-        console.log(task);
         let containerCurrentTodo = document.getElementById("current-tasks");
         let containerFinishedTodo = document.getElementById("finished-tasks");
 
@@ -204,12 +196,31 @@ function toggleAction(id) {
             moveToList = containerFinishedTodo;
             task.finished = true;
 
+            //FINISHED DATE ADDED
+            dateF = document.createElement("span");
+            dateF.className = "date-finished";
+            task.dateFinished = new Date();
+            let date =
+                task.dateFinished.getDate() +
+                "/" +
+                (task.dateFinished.getMonth() + 1) +
+                "/" +
+                task.dateFinished.getFullYear();
+            let time =
+                task.dateFinished.getHours() +
+                ":" +
+                task.dateFinished.getMinutes();
+            dateF.innerHTML = "Finished: <br>" + date + " - " + time;
+            task.otherInfo.appendChild(dateF);
+
             task.actionButton.className = "undo-button";
             task.actionButton.firstChild.className = "fas fa-times";
         } else {
             moveFromList = containerFinishedTodo;
             moveToList = containerCurrentTodo;
             task.finished = false;
+
+            task.otherInfo.removeChild(task.otherInfo.lastChild);
 
             task.actionButton.className = "complete-button";
             task.actionButton.firstChild.className = "fas fa-check";
