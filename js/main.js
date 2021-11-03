@@ -18,31 +18,52 @@ let todoList = [];
 
 window.onload = function () {
     createHardcodedTodoList();
-    initializeAddTaskButton();
     initializeModal();
 };
 
-function initializeAddTaskButton() {
+// MODAL
+function initializeModal() {
     let addButton = document.getElementById("addTaskButton");
     addButton.addEventListener("click", showModal);
-}
 
-function initializeModal() {
-    let b = document.getElementById("closeModal");
-    b.addEventListener("click", hideModal);
+    let closeButton = document.getElementById("closeModal");
+    closeButton.addEventListener("click", hideModal);
+
+    let confirmButton = document.getElementById("confirmAdd");
+    confirmButton.addEventListener("click", addNewTask);
 }
 
 function showModal() {
-    console.log("KLICKADE ");
     let modal = document.getElementById("modal-container");
     modal.style.visibility = "visible";
+    modal.style.opacity = 1;
 }
 
 function hideModal() {
     let modal = document.getElementById("modal-container");
     modal.style.visibility = "hidden";
+    modal.style.opacity = 0;
 }
 
+function addNewTask() {
+    let containerCurrentTodo = document.getElementById("current-tasks");
+    let desc = document.getElementById("taskDescription").value;
+
+    if (desc != "") {
+        let sel = document.getElementById("importance");
+        let prio = sel.options[sel.selectedIndex].text;
+
+        let taskItem = new TodoItem(desc, prio, new Date());
+        let task = createTask(taskItem, todoList.length);
+
+        containerCurrentTodo.appendChild(task);
+        todoList.push(taskItem);
+    }
+
+    hideModal();
+}
+
+// HARDCODED TASKS
 function createHardcodedTodoList() {
     let todo1 = new TodoItem("Städa rummet.", "High", new Date());
     let todo2 = new TodoItem("Plugga.", "Mid", new Date());
@@ -51,6 +72,7 @@ function createHardcodedTodoList() {
     createHTML([todo1, todo2, todo3]);
 }
 
+// BUILD TASKS
 function createHTML(list) {
     let containerCurrentTodo = document.getElementById("current-tasks");
     let containerFinishedTodo = document.getElementById("finished-tasks");
@@ -199,6 +221,7 @@ function createTrashButton(id) {
     return b;
 }
 
+// ACTIONS
 function toggleAction(id) {
     let task = null;
     for (t of todoList) {
@@ -207,6 +230,8 @@ function toggleAction(id) {
             break;
         }
     }
+
+    console.log("TOGGLEACTION: ", task);
 
     if (task != null) {
         let containerCurrentTodo = document.getElementById("current-tasks");

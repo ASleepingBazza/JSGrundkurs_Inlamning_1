@@ -3,6 +3,9 @@
 body {
     #modal-container {
         visibility: hidden;
+        opacity: 0;
+
+        transition: visibility 0.3s ease, opacity 0.3s ease;
 
         position: absolute;
         width: 100vw;
@@ -83,8 +86,12 @@ body {
                     align-items: center;
 
                     font-size: 1.8rem;
-                    padding: 10pt;
+                    padding: 15pt;
                     width: 90%;
+
+                    @include mixins.tablets {
+                        padding: 10pt;
+                    }
                 }
 
                 #taskDescription {
