@@ -59,17 +59,26 @@ function addNewTask() {
         containerCurrentTodo.appendChild(task);
         todoList.push(taskItem);
     }
+    document.getElementById("taskDescription").value = "";
 
     hideModal();
 }
 
 // HARDCODED TASKS
 function createHardcodedTodoList() {
-    let todo1 = new TodoItem("Städa rummet.", "High", new Date());
-    let todo2 = new TodoItem("Plugga.", "Mid", new Date());
-    let todo3 = new TodoItem("Göra en grej.", "Low", new Date());
+    let todo1 = new TodoItem("Städa rummet.", "Mid", new Date());
+    let todo2 = new TodoItem("Plugga.", "High", new Date());
+    let todo3 = new TodoItem(
+        "Programmera projektil för mitt Tower Defence.",
+        "High",
+        new Date()
+    );
 
-    createHTML([todo1, todo2, todo3]);
+    let lorem =
+        " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe quam inventore, officia aspernatur explicabo molestiae nobis, dicta amet voluptate placeat incidunt, quidem quos minima consequatur repudiandae similique magni cupiditate modi!";
+    let todo4 = new TodoItem(lorem, "Low", new Date());
+
+    createHTML([todo1, todo2, todo3, todo4]);
 }
 
 // BUILD TASKS
@@ -230,8 +239,6 @@ function toggleAction(id) {
             break;
         }
     }
-
-    console.log("TOGGLEACTION: ", task);
 
     if (task != null) {
         let containerCurrentTodo = document.getElementById("current-tasks");

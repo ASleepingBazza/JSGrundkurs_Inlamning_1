@@ -134,7 +134,7 @@ body main #tasks-container .task {
   border-radius: 4pt;
 }
 body main #tasks-container .task .description {
-  padding: 5pt;
+  padding: 8pt;
   display: flex;
   flex-direction: column;
   justify-content: center;
