@@ -27,6 +27,30 @@
         ></script>
     </head>
     <body>
+        <div id="modal-container">
+            <div class="background-effect"></div>
+            <div class="modal">
+                <button id="closeModal"><i class="fas fa-times"></i></button>
+
+                <div id="inputs">
+                    <span>What's the task?</span>
+                    <textarea id="taskDescription" cols="3" rows="3"></textarea>
+                </div>
+
+                <div id="selections">
+                    <div id="prio">
+                        <span>Priority:</span>
+                        <select id="importance">
+                            <option value="High">High</option>
+                            <option value="Mid">Mid</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                    <button id="confirmAdd"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+        </div>
+
         <header>
             <div id="header-container">
                 <h2>Elias's ToDo Lista</h2>
@@ -41,17 +65,13 @@
                     <div id="current-title">
                         <span>Current Tasks</span>
                     </div>
-                    <div id="current-tasks">
-                       
-                    </div>
+                    <div id="current-tasks"></div>
                 </div>
                 <div id="finished-container">
                     <div id="finished-title">
                         <span>Finished Tasks</span>
                     </div>
-                    <div id="finished-tasks">
-                        
-                    </div>
+                    <div id="finished-tasks"></div>
                 </div>
             </div>
         </main>

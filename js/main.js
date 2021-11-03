@@ -18,7 +18,30 @@ let todoList = [];
 
 window.onload = function () {
     createHardcodedTodoList();
+    initializeAddTaskButton();
+    initializeModal();
 };
+
+function initializeAddTaskButton() {
+    let addButton = document.getElementById("addTaskButton");
+    addButton.addEventListener("click", showModal);
+}
+
+function initializeModal() {
+    let b = document.getElementById("closeModal");
+    b.addEventListener("click", hideModal);
+}
+
+function showModal() {
+    console.log("KLICKADE ");
+    let modal = document.getElementById("modal-container");
+    modal.style.visibility = "visible";
+}
+
+function hideModal() {
+    let modal = document.getElementById("modal-container");
+    modal.style.visibility = "hidden";
+}
 
 function createHardcodedTodoList() {
     let todo1 = new TodoItem("Städa rummet.", "High", new Date());

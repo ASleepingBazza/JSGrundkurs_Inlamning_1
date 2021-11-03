@@ -1,4 +1,4 @@
-body main #tasks-container .task .undo-button, body main #tasks-container .task .complete-button {
+body #modal-container .modal #closeModal, body #modal-container .modal #selections #confirmAdd, body main #tasks-container .task .undo-button, body main #tasks-container .task .complete-button {
   border-radius: 4pt;
   margin: 10pt;
   width: 40px;
@@ -6,11 +6,11 @@ body main #tasks-container .task .undo-button, body main #tasks-container .task 
   border: none;
   transition: transform 0.1s ease, background-color 0.1s ease;
 }
-body main #tasks-container .task .undo-button .fas, body main #tasks-container .task .complete-button .fas {
+body #modal-container .modal #closeModal .fas, body #modal-container .modal #selections #confirmAdd .fas, body main #tasks-container .task .undo-button .fas, body main #tasks-container .task .complete-button .fas {
   color: white;
   pointer-events: none;
 }
-body main #tasks-container .task .undo-button:hover, body main #tasks-container .task .complete-button:hover {
+body #modal-container .modal #closeModal:hover, body #modal-container .modal #selections #confirmAdd:hover, body main #tasks-container .task .undo-button:hover, body main #tasks-container .task .complete-button:hover {
   transform: scale(120%);
 }
 
@@ -295,6 +295,136 @@ body footer #footer-container a:hover, body footer #footer-container a:active {
   transform: scale(110%);
   background-color: white;
   color: black;
+}
+
+body #modal-container {
+  visibility: hidden;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
+body #modal-container .background-effect {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+body #modal-container .modal {
+  color: white;
+  z-index: 2;
+  background-color: #5a5a5a;
+  height: 50vh;
+  width: 90vw;
+  border-radius: 5pt;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+@media screen and (min-width: 768px) {
+  body #modal-container .modal {
+    flex-direction: row;
+    width: 70vw;
+  }
+}
+@media screen and (min-width: 1200px) {
+  body #modal-container .modal {
+    width: 50vw;
+  }
+}
+body #modal-container .modal #closeModal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+}
+body #modal-container .modal #closeModal .fas {
+  font-size: 1.2rem;
+  color: black;
+}
+body #modal-container .modal #closeModal:active {
+  background-color: #8c8c8c;
+}
+body #modal-container .modal #inputs {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+@media screen and (min-width: 768px) {
+  body #modal-container .modal #inputs {
+    width: 100%;
+  }
+}
+body #modal-container .modal #inputs span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  padding: 10pt;
+  width: 90%;
+}
+body #modal-container .modal #inputs #taskDescription {
+  border: none;
+  border-radius: 3pt;
+  font-size: 1.2rem;
+  resize: none;
+  height: 80%;
+  width: 90%;
+  margin-bottom: 0pt;
+}
+@media screen and (min-width: 768px) {
+  body #modal-container .modal #inputs #taskDescription {
+    margin-bottom: 20pt;
+  }
+}
+body #modal-container .modal #selections {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+@media screen and (min-width: 768px) {
+  body #modal-container .modal #selections {
+    width: 60%;
+    justify-content: center;
+    flex-direction: column-reverse;
+  }
+}
+body #modal-container .modal #selections #prio {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 7pt;
+}
+body #modal-container .modal #selections #prio span {
+  font-size: 1.3rem;
+}
+body #modal-container .modal #selections #prio #importance {
+  border: none;
+  font-size: 1rem;
+  width: 100px;
+  height: 30px;
+}
+body #modal-container .modal #selections #confirmAdd {
+  width: 100px;
+  height: 100px;
+  font-size: 3rem;
+  background-color: #46a746;
+}
+body #modal-container .modal #selections #confirmAdd:active {
+  background-color: #296f29;
 }
 
 body {
