@@ -17,17 +17,14 @@ body {
             width: 15px;
         }
 
-        /* Track */
         &::-webkit-scrollbar-track {
             background: rgb(30, 30, 30);
         }
 
-        /* Handle */
         &::-webkit-scrollbar-thumb {
             background: #666;
         }
 
-        /* Handle on hover */
         &::-webkit-scrollbar-thumb:hover {
             background: #444;
         }
@@ -36,6 +33,9 @@ body {
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 10pt;
+            gap: 10pt;
+            width: 100%;
 
             @include mixins.tablets {
                 flex-direction: row;
@@ -49,25 +49,36 @@ body {
             // LAYOUT
             .task {
                 display: grid;
+                grid-template-columns: 1fr 200px 70px 70px;
+                grid-template-rows: 70px 1fr;
                 grid-template-areas:
                     "one two three four"
-                    "five six seven eight"
-                    "nine ten eleven twelve";
+                    "five six seven eight";
 
                 .complete-button {
                     grid-area: four;
                 }
 
                 .description {
-                    grid-area: one / one / span 3 / span 2;
+                    grid-area: one / one / span 2 / span 2;
                 }
 
                 .other-info {
-                    grid-area: seven / seven / span 2 / span 2;
+                    grid-area: seven / seven / span 1 / span 2;
                 }
 
                 .trash-button {
                     grid-area: three;
+                }
+
+                @include mixins.desktop {
+                    .description {
+                        grid-area: one / one / span 1 / span 1;
+                    }
+
+                    .other-info {
+                        grid-area: two / two / span 1 / span 1;
+                    }
                 }
             }
 
@@ -94,34 +105,27 @@ body {
                     }
                 }
 
+                .undo-button {
+                    background-color: rgb(200, 60, 60);
+                    @extend %actionButton;
+                    &:active {
+                        background-color: rgb(100, 50, 50);
+                    }
+                }
+
                 .complete-button {
                     background-color: rgb(70, 167, 70);
-                    border-radius: 4pt;
-                    margin: 10pt;
-                    width: 40px;
-                    height: 40px;
-                    border: none;
-
-                    transition: transform 0.1s ease, background-color 0.1s ease;
-
-                    .fas {
-                        color: white;
-                    }
-
-                    &:hover {
-                        transform: scale(120%);
-                    }
-
+                    @extend %actionButton;
                     &:active {
                         background-color: rgb(41, 111, 41);
                     }
                 }
 
                 .other-info {
-                    min-width: 100px;
                     margin: 10pt;
                     display: flex;
                     flex-direction: column;
+                    justify-content: center;
                     gap: 3pt;
                     font-size: 0.75rem;
                     color: rgb(174, 174, 174);
@@ -151,8 +155,7 @@ body {
             }
 
             #current-container {
-                width: 90%;
-                margin: 10pt;
+                width: 100%;
 
                 @include mixins.tablets {
                     width: 50%;
@@ -174,8 +177,7 @@ body {
             }
 
             #finished-container {
-                width: 90%;
-                margin: 10pt;
+                width: 100%;
 
                 @include mixins.tablets {
                     width: 50%;

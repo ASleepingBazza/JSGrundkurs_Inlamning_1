@@ -1,3 +1,19 @@
+body main #tasks-container .task .undo-button, body main #tasks-container .task .complete-button {
+  border-radius: 4pt;
+  margin: 10pt;
+  width: 40px;
+  height: 40px;
+  border: none;
+  transition: transform 0.1s ease, background-color 0.1s ease;
+}
+body main #tasks-container .task .undo-button .fas, body main #tasks-container .task .complete-button .fas {
+  color: white;
+  pointer-events: none;
+}
+body main #tasks-container .task .undo-button:hover, body main #tasks-container .task .complete-button:hover {
+  transform: scale(120%);
+}
+
 body header {
   color: white;
   background-color: black;
@@ -42,9 +58,6 @@ body main {
   justify-content: center;
   height: 100%;
   overflow-y: scroll;
-  /* Track */
-  /* Handle */
-  /* Handle on hover */
 }
 body main::-webkit-scrollbar {
   width: 15px;
@@ -62,6 +75,9 @@ body main #tasks-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 10pt;
+  gap: 10pt;
+  width: 100%;
 }
 @media screen and (min-width: 768px) {
   body main #tasks-container {
@@ -76,19 +92,29 @@ body main #tasks-container {
 }
 body main #tasks-container .task {
   display: grid;
-  grid-template-areas: "one two three four" "five six seven eight" "nine ten eleven twelve";
+  grid-template-columns: 1fr 200px 70px 70px;
+  grid-template-rows: 70px 1fr;
+  grid-template-areas: "one two three four" "five six seven eight";
 }
 body main #tasks-container .task .complete-button {
   grid-area: four;
 }
 body main #tasks-container .task .description {
-  grid-area: one/one/span 3/span 2;
+  grid-area: one/one/span 2/span 2;
 }
 body main #tasks-container .task .other-info {
-  grid-area: seven/seven/span 2/span 2;
+  grid-area: seven/seven/span 1/span 2;
 }
 body main #tasks-container .task .trash-button {
   grid-area: three;
+}
+@media screen and (min-width: 1200px) {
+  body main #tasks-container .task .description {
+    grid-area: one/one/span 1/span 1;
+  }
+  body main #tasks-container .task .other-info {
+    grid-area: two/two/span 1/span 1;
+  }
 }
 body main #tasks-container .task {
   background-color: #585858;
@@ -109,29 +135,23 @@ body main #tasks-container .task .description .desc-text {
   font-size: 0.9rem;
   color: white;
 }
+body main #tasks-container .task .undo-button {
+  background-color: #c83c3c;
+}
+body main #tasks-container .task .undo-button:active {
+  background-color: #643232;
+}
 body main #tasks-container .task .complete-button {
   background-color: #46a746;
-  border-radius: 4pt;
-  margin: 10pt;
-  width: 40px;
-  height: 40px;
-  border: none;
-  transition: transform 0.1s ease, background-color 0.1s ease;
-}
-body main #tasks-container .task .complete-button .fas {
-  color: white;
-}
-body main #tasks-container .task .complete-button:hover {
-  transform: scale(120%);
 }
 body main #tasks-container .task .complete-button:active {
   background-color: #296f29;
 }
 body main #tasks-container .task .other-info {
-  min-width: 100px;
   margin: 10pt;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 3pt;
   font-size: 0.75rem;
   color: #aeaeae;
@@ -155,8 +175,7 @@ body main #tasks-container .task .trash-button:active {
   background-color: #0c0c0c;
 }
 body main #tasks-container #current-container {
-  width: 90%;
-  margin: 10pt;
+  width: 100%;
 }
 @media screen and (min-width: 768px) {
   body main #tasks-container #current-container {
@@ -176,8 +195,7 @@ body main #tasks-container #current-container #current-tasks {
   gap: 10pt;
 }
 body main #tasks-container #finished-container {
-  width: 90%;
-  margin: 10pt;
+  width: 100%;
 }
 @media screen and (min-width: 768px) {
   body main #tasks-container #finished-container {
@@ -267,11 +285,11 @@ body .prio-high {
   color: #ff8c8c;
 }
 body .prio-mid {
-  font-weight: bold;
+  font-weight: normal;
   color: #eecf44;
 }
 body .prio-low {
-  font-weight: normal;
+  font-weight: lighter;
   color: #82d061;
 }
 
