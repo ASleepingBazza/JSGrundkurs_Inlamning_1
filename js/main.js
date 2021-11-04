@@ -341,7 +341,6 @@ function toggleAction(id) {
         if (moveFromList != -1) {
             for (let i = 0; i < moveFromList.children.length; i++) {
                 if (moveFromList.children[i].id == task.id) {
-                    console.log(moveFromList.children[i].style.background);
                     if (moveFromList.children[i].style.opacity == 0.5) {
                         moveFromList.children[i].style.opacity = 1;
                     } else {
