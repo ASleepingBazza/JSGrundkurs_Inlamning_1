@@ -14,6 +14,34 @@ body #modal-container .modal #closeModal:hover, body #modal-container .modal #se
   transform: scale(120%);
 }
 
+body main #tasks-container #current-container #current-title #filter-container, body main #tasks-container #finished-container #finished-title #filter-container {
+  display: flex;
+  align-items: center;
+}
+body main #tasks-container #current-container #current-title #filter-container .fas, body main #tasks-container #finished-container #finished-title #filter-container .fas {
+  font-size: 0.8em;
+  margin-right: 8pt;
+}
+body main #tasks-container #current-container #current-title #filter-container #current-filter, body main #tasks-container #finished-container #finished-title #filter-container #current-filter,
+body main #tasks-container #current-container #current-title #filter-container #finished-filter,
+body main #tasks-container #finished-container #finished-title #filter-container #finished-filter {
+  border: none;
+  border-radius: 4pt;
+  width: 80px;
+  height: 26px;
+  color: #666;
+}
+
+body main #tasks-container #current-container #current-title, body main #tasks-container #finished-container #finished-title {
+  position: relative;
+  padding: 5pt;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: white;
+  font-size: 1.4rem;
+}
+
 body header {
   color: white;
   background-color: black;
@@ -53,7 +81,6 @@ body header #header-container #addTaskButton:hover {
 
 body main {
   flex-grow: 1;
-  color: black;
   background-color: #3d3d3d;
   display: flex;
   justify-content: center;
@@ -149,6 +176,7 @@ body main #tasks-container .task .description .desc-title {
 body main #tasks-container .task .description .desc-text {
   font-size: 0.9rem;
   color: white;
+  word-break: break-word;
 }
 body main #tasks-container .task .undo-button {
   background-color: #c83c3c;
@@ -205,13 +233,6 @@ body main #tasks-container #current-container {
     width: 50%;
   }
 }
-body main #tasks-container #current-container #current-title {
-  padding: 5pt;
-  display: flex;
-  justify-content: center;
-  color: white;
-  font-size: 1.4rem;
-}
 body main #tasks-container #current-container #current-tasks {
   display: flex;
   flex-direction: column;
@@ -226,13 +247,6 @@ body main #tasks-container #finished-container {
     width: 50%;
     padding-bottom: 0;
   }
-}
-body main #tasks-container #finished-container #finished-title {
-  padding: 5pt;
-  display: flex;
-  justify-content: center;
-  color: white;
-  font-size: 1.4rem;
 }
 body main #tasks-container #finished-container #finished-tasks {
   display: flex;
