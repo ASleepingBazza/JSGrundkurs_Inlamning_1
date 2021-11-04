@@ -175,6 +175,7 @@ body main #tasks-container .task .description .desc-title {
 body main #tasks-container .task .description .desc-text {
   font-size: 0.9rem;
   color: white;
+  word-break: break-word;
 }
 body main #tasks-container .task .undo-button {
   background-color: #c83c3c;

@@ -19,6 +19,7 @@ let todoList = [];
 window.onload = function () {
     createHardcodedTodoList();
     initializeModal();
+    initializeFilters();
 };
 
 // MODAL
@@ -64,6 +65,58 @@ function addNewTask() {
     hideModal();
 }
 
+// FILTER
+function initializeFilters() {
+    let currentFilter = document.getElementById("current-filter");
+    currentFilter.addEventListener("change", () =>
+        handleSortChange(true, currentFilter.value)
+    );
+
+    let confirmAdd = document.getElementById("confirmAdd");
+    confirmAdd.addEventListener("click", () =>
+        handleSortChange(true, currentFilter.value)
+    );
+
+    let finishedFilter = document.getElementById("finished-filter");
+    finishedFilter.addEventListener("change", () =>
+        handleSortChange(false, finishedFilter.value)
+    );
+}
+
+function handleSortChange(currentList, sortValue) {
+    //console.log(whichList, value);
+    let workingList;
+    if (currentList) {
+        workingList = document.getElementById("current-tasks");
+    } else {
+        workingList = document.getElementById("finished-tasks");
+    }
+
+    if (sortValue == "High") {
+        sortList("Low", workingList);
+        sortList("Mid", workingList);
+        sortList("High", workingList);
+    } else if (sortValue == "Mid") {
+        sortList("Low", workingList);
+        sortList("High", workingList);
+        sortList("Mid", workingList);
+    } else if (sortValue == "Low") {
+        sortList("High", workingList);
+        sortList("Mid", workingList);
+        sortList("Low", workingList);
+    }
+}
+
+function sortList(sortPreffer, givenList) {
+    for (child of givenList.children) {
+        let prioStatus =
+            child.childNodes[2].childNodes[0].childNodes[1].innerHTML;
+        if (prioStatus == " " + sortPreffer) {
+            givenList.insertBefore(child, givenList.firstChild);
+        }
+    }
+}
+
 // HARDCODED TASKS
 function createHardcodedTodoList() {
     let todo1 = new TodoItem("Städa rummet.", "Mid", new Date());
@@ -95,6 +148,9 @@ function createHTML(list) {
         }
         todoList.push(list[i]);
     }
+
+    handleSortChange(containerCurrentTodo, "High");
+    handleSortChange(containerFinishedTodo, "High");
 }
 
 function createTask(todoItem, id) {
@@ -123,6 +179,7 @@ function createTask(todoItem, id) {
 function createActionButton(id, finished) {
     let b = document.createElement("button");
     b.addEventListener("click", () => toggleAction(id));
+
     let i = document.createElement("i");
     if (finished) {
         b.className = "undo-button";
@@ -146,7 +203,7 @@ function createDescription(descText) {
 
     let text = document.createElement("span");
     text.className = "desc-text";
-    text.innerHTML = descText;
+    text.innerText = descText;
 
     d.appendChild(title);
     d.appendChild(text);
@@ -166,11 +223,11 @@ function createOtherInfo(todoPrio, todoDateAdded, todoDateFinished) {
 
     let prioStatus = document.createElement("span");
     if (todoPrio == "Low") {
-        prioStatus.className = "prio-low";
+        prioStatus.className = "prio-status prio-low";
     } else if (todoPrio == "Mid") {
-        prioStatus.className = "prio-mid";
+        prioStatus.className = "prio-status prio-mid";
     } else if (todoPrio == "High") {
-        prioStatus.className = "prio-high";
+        prioStatus.className = "prio-status prio-high";
     }
     prioStatus.innerHTML = " " + todoPrio;
 
@@ -280,12 +337,29 @@ function toggleAction(id) {
             task.actionButton.className = "complete-button";
             task.actionButton.firstChild.className = "fas fa-check";
         }
-
+        // MOVE THE TASK TO THE OTHER LIST
         if (moveFromList != -1) {
             for (let i = 0; i < moveFromList.children.length; i++) {
                 if (moveFromList.children[i].id == task.id) {
+                    console.log(moveFromList.children[i].style.background);
+                    if (moveFromList.children[i].style.opacity == 0.5) {
+                        moveFromList.children[i].style.opacity = 1;
+                    } else {
+                        moveFromList.children[i].style.opacity = 0.5;
+                    }
                     moveToList.appendChild(moveFromList.children[i]);
                 }
+            }
+
+            // RESORT THE LIST THAT THE ITEM MOVES TO
+            if (!task.finished) {
+                let currentFilter =
+                    document.getElementById("current-filter").value;
+                handleSortChange(true, currentFilter);
+            } else {
+                let finishedFilter =
+                    document.getElementById("finished-filter").value;
+                handleSortChange(false, finishedFilter);
             }
         }
     }
