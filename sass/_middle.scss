@@ -4,7 +4,6 @@ body {
     main {
         flex-grow: 1;
 
-        color: black;
         background-color: rgb(61, 61, 61);
         display: flex;
         justify-content: center;
@@ -187,11 +186,11 @@ body {
                 }
 
                 #current-title {
-                    padding: 5pt;
-                    display: flex;
-                    justify-content: center;
-                    color: white;
-                    font-size: 1.4rem;
+                    @extend %listTitleStyling;
+
+                    #filter-container {
+                        @extend %filterStyling;
+                    }
                 }
 
                 #current-tasks {
@@ -209,11 +208,11 @@ body {
                 }
 
                 #finished-title {
-                    padding: 5pt;
-                    display: flex;
-                    justify-content: center;
-                    color: white;
-                    font-size: 1.4rem;
+                    @extend %listTitleStyling;
+
+                    #filter-container {
+                        @extend %filterStyling;
+                    }
                 }
 
                 #finished-tasks {
