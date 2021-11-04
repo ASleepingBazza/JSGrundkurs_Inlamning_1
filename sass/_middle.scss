@@ -73,7 +73,7 @@ body {
                     grid-area: seven / seven / span 1 / span 2;
                 }
 
-                @include mixins.tablets {
+                @include mixins.desktop {
                     grid-template-columns: 1fr 120px 50px 70px;
                     .complete-button,
                     .undo-button {
@@ -105,6 +105,7 @@ body {
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
+                    text-align: center;
 
                     .desc-title {
                         font-size: 0.9rem;
@@ -140,10 +141,6 @@ body {
                     justify-content: center;
 
                     margin-bottom: 7pt;
-                    @include mixins.tablets {
-                        margin-bottom: 5pt;
-                        margin-top: 5pt;
-                    }
 
                     gap: 4pt;
 
@@ -151,7 +148,9 @@ body {
                     color: rgb(174, 174, 174);
                     text-align: center;
 
-                    @include mixins.tablets {
+                    @include mixins.desktop {
+                        margin-bottom: 5pt;
+                        margin-top: 5pt;
                         text-align: start;
                     }
                 }
@@ -203,9 +202,11 @@ body {
 
             #finished-container {
                 width: 100%;
+                padding-bottom: 10pt;
 
                 @include mixins.tablets {
                     width: 50%;
+                    padding-bottom: 0;
                 }
 
                 #finished-title {

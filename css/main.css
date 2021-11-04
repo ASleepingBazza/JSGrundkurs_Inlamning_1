@@ -111,7 +111,7 @@ body main #tasks-container .task .description {
 body main #tasks-container .task .other-info {
   grid-area: seven/seven/span 1/span 2;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1200px) {
   body main #tasks-container .task {
     grid-template-columns: 1fr 120px 50px 70px;
   }
@@ -139,6 +139,7 @@ body main #tasks-container .task .description {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 body main #tasks-container .task .description .desc-title {
   font-size: 0.9rem;
@@ -171,14 +172,10 @@ body main #tasks-container .task .other-info {
   color: #aeaeae;
   text-align: center;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1200px) {
   body main #tasks-container .task .other-info {
     margin-bottom: 5pt;
     margin-top: 5pt;
-  }
-}
-@media screen and (min-width: 768px) {
-  body main #tasks-container .task .other-info {
     text-align: start;
   }
 }
@@ -222,10 +219,12 @@ body main #tasks-container #current-container #current-tasks {
 }
 body main #tasks-container #finished-container {
   width: 100%;
+  padding-bottom: 10pt;
 }
 @media screen and (min-width: 768px) {
   body main #tasks-container #finished-container {
     width: 50%;
+    padding-bottom: 0;
   }
 }
 body main #tasks-container #finished-container #finished-title {
