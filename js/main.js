@@ -14,6 +14,7 @@ class TodoItem {
     }
 }
 
+let idCounter = 0;
 let todoList = [];
 
 window.onload = function () {
@@ -55,7 +56,8 @@ function addNewTask() {
         let prio = sel.options[sel.selectedIndex].text;
 
         let taskItem = new TodoItem(desc, prio, new Date());
-        let task = createTask(taskItem, todoList.length);
+        let task = createTask(taskItem, idCounter);
+        idCounter++;
 
         containerCurrentTodo.appendChild(task);
         todoList.push(taskItem);
@@ -140,7 +142,8 @@ function createHTML(list) {
     let containerFinishedTodo = document.getElementById("finished-tasks");
 
     for (let i = 0; i < list.length; i++) {
-        let task = createTask(list[i], i);
+        let task = createTask(list[i], idCounter);
+        idCounter++;
         if (list[i].finished) {
             containerFinishedTodo.appendChild(task);
         } else {
