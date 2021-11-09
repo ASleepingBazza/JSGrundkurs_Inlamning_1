@@ -4,9 +4,7 @@ body {
     #modal-container {
         visibility: hidden;
         opacity: 0;
-
-        transition: visibility 0.3s ease, opacity 0.3s ease;
-
+        transition: opacity 0.3s ease, visibility 0.3s ease;
         position: absolute;
         width: 100vw;
         height: 100vh;
