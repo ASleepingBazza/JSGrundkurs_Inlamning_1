@@ -1,15 +1,13 @@
 class TodoItem {
-    constructor(desc, prio, dateAdded) {
+    constructor(desc, prio) {
         this.id = null;
         this.actionButton = null;
         this.trashButton = null;
         this.description = desc;
         this.otherInfo = null;
-
         this.prio = prio;
-        this.dateAdded = dateAdded;
+        this.dateAdded = new Date();
         this.dateFinished = null;
-
         this.finished = false;
     }
 }
@@ -48,23 +46,18 @@ function hideModal() {
 }
 
 function addNewTask() {
-    let containerCurrentTodo = document.getElementById("current-tasks");
     let desc = document.getElementById("taskDescription").value;
-
     if (desc != "") {
         let sel = document.getElementById("importance");
         let prio = sel.options[sel.selectedIndex].text;
 
-        let taskItem = new TodoItem(desc, prio, new Date());
-        let task = createTask(taskItem, idCounter);
-        idCounter++;
-
-        containerCurrentTodo.appendChild(task);
+        let taskItem = new TodoItem(desc, prio);
         todoList.push(taskItem);
+        idCounter++;
     }
     document.getElementById("taskDescription").value = "";
-
     hideModal();
+    renderHTML();
 }
 
 // FILTER
@@ -85,10 +78,9 @@ function initializeFilters() {
     );
 }
 
-function handleSortChange(currentList, sortValue) {
-    //console.log(whichList, value);
+function handleSortChange(isCurrentList, sortValue) {
     let workingList;
-    if (currentList) {
+    if (isCurrentList) {
         workingList = document.getElementById("current-tasks");
     } else {
         workingList = document.getElementById("finished-tasks");
@@ -121,60 +113,64 @@ function sortList(sortPreffer, givenList) {
 
 // HARDCODED TASKS
 function createHardcodedTodoList() {
-    let todo1 = new TodoItem("Städa rummet.", "Mid", new Date());
-    let todo2 = new TodoItem("Plugga.", "High", new Date());
+    let todo1 = new TodoItem("Städa rummet.", "Mid");
+    let todo2 = new TodoItem("Plugga.", "High");
     let todo3 = new TodoItem(
         "Programmera projektil för mitt Tower Defence.",
-        "High",
-        new Date()
+        "High"
     );
 
     let lorem =
         " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe quam inventore, officia aspernatur explicabo molestiae nobis, dicta amet voluptate placeat incidunt, quidem quos minima consequatur repudiandae similique magni cupiditate modi!";
-    let todo4 = new TodoItem(lorem, "Low", new Date());
+    let todo4 = new TodoItem(lorem, "Low");
 
-    createHTML([todo1, todo2, todo3, todo4]);
+    todoList.push(todo1);
+    todoList.push(todo2);
+    todoList.push(todo3);
+    todoList.push(todo4);
+    renderHTML();
 }
 
 // BUILD TASKS
-function createHTML(list) {
+function renderHTML() {
     let containerCurrentTodo = document.getElementById("current-tasks");
     let containerFinishedTodo = document.getElementById("finished-tasks");
 
-    for (let i = 0; i < list.length; i++) {
-        let task = createTask(list[i], idCounter);
-        idCounter++;
-        if (list[i].finished) {
-            containerFinishedTodo.appendChild(task);
+    containerCurrentTodo.innerHTML = "";
+    containerFinishedTodo.innerHTML = "";
+
+    for (todo of todoList) {
+        let taskHTML = createTask(todo);
+        if (todo.finished) {
+            containerFinishedTodo.appendChild(taskHTML);
         } else {
-            containerCurrentTodo.appendChild(task);
+            containerCurrentTodo.appendChild(taskHTML);
         }
-        todoList.push(list[i]);
     }
 
-    handleSortChange(containerCurrentTodo, "High");
-    handleSortChange(containerFinishedTodo, "High");
+    // WHEN ALL TASKS ARE ADDED: SORT THEM
+    let currentFilter = document.getElementById("current-filter");
+    let finishedFilter = document.getElementById("finished-filter");
+    handleSortChange(true, currentFilter.value);
+    handleSortChange(false, finishedFilter.value);
 }
 
-function createTask(todoItem, id) {
-    todoItem.actionButton = createActionButton(id, todoItem.finished);
-    todoItem.description = createDescription(todoItem.description);
-    todoItem.otherInfo = createOtherInfo(
-        todoItem.prio,
-        todoItem.dateAdded,
-        todoItem.dateFinished
-    );
-    todoItem.id = id;
-    todoItem.trashButton = createTrashButton(id);
+function createTask(todoItem) {
+    todoItem.id = idCounter;
+    idCounter++;
+
+    actionButton = createActionButton(todoItem.id, todoItem.finished);
+    desc = createDescription(todoItem.description);
+    otherInfo = createOtherInfo(todoItem);
+    trashButton = createTrashButton(todoItem.id);
 
     let task = document.createElement("div");
     task.className = "task";
-    task.id = id;
 
-    task.appendChild(todoItem.actionButton);
-    task.appendChild(todoItem.description);
-    task.appendChild(todoItem.otherInfo);
-    task.appendChild(todoItem.trashButton);
+    task.appendChild(actionButton);
+    task.appendChild(desc);
+    task.appendChild(otherInfo);
+    task.appendChild(trashButton);
 
     return task;
 }
@@ -213,7 +209,7 @@ function createDescription(descText) {
     return d;
 }
 
-function createOtherInfo(todoPrio, todoDateAdded, todoDateFinished) {
+function createOtherInfo(todoItem) {
     let d = document.createElement("div");
     d.className = "other-info";
 
@@ -225,57 +221,58 @@ function createOtherInfo(todoPrio, todoDateAdded, todoDateFinished) {
     prioTitle.innerHTML = "Prio:";
 
     let prioStatus = document.createElement("span");
-    if (todoPrio == "Low") {
+    if (todoItem.prio == "Low") {
         prioStatus.className = "prio-status prio-low";
-    } else if (todoPrio == "Mid") {
+    } else if (todoItem.prio == "Mid") {
         prioStatus.className = "prio-status prio-mid";
-    } else if (todoPrio == "High") {
+    } else if (todoItem.prio == "High") {
         prioStatus.className = "prio-status prio-high";
     }
-    prioStatus.innerHTML = " " + todoPrio;
+    prioStatus.innerHTML = " " + todoItem.prio;
 
     prio.appendChild(prioTitle);
     prio.appendChild(prioStatus);
 
     // DATE ADDED
-    let dateAdded = document.createElement("span");
-    dateAdded.className = "date-added";
-    let date =
-        todoDateAdded.getDate() +
-        "/" +
-        (todoDateAdded.getMonth() + 1) +
-        "/" +
-        todoDateAdded.getFullYear();
-
-    let time = todoDateAdded.getHours() + ":" + todoDateAdded.getMinutes();
-    dateAdded.innerHTML = "Added: <br>" + date + " - " + time;
+    let dateAdded = createDateHTML(todoItem, "Added");
 
     // Add all
     d.appendChild(prio);
     d.appendChild(dateAdded);
 
     // IF a completed date exists
-    if (todoDateFinished != null) {
-        let dateFinished = document.createElement("span");
-        dateFinished.className = "date-finished";
-        let date =
-            dateFinished.getDate() +
-            "/" +
-            dateFinished.getMonth() +
-            "/" +
-            dateFinished.getFullYear();
-        let time =
-            dateFinished.getHours() +
-            ":" +
-            dateFinished.getMinutes() +
-            ":" +
-            dateFinished.getSeconds();
-        dateFinished.innerHTML = "Added: " + date + " - " + time;
-
+    if (todoItem.dateFinished != null) {
+        let dateFinished = createDateHTML(todoItem, "Finished");
         d.appendChild(dateFinished);
     }
 
     return d;
+}
+
+function createDateHTML(todoItem, desc) {
+    let dateHTML = document.createElement("span");
+    let workingDate = null;
+    if (desc == "Added") {
+        workingDate = todoItem.dateAdded;
+    } else {
+        workingDate = todoItem.dateFinished;
+    }
+    dateHTML.className = "date-finished";
+    let date =
+        workingDate.getDate() +
+        "/" +
+        workingDate.getMonth() +
+        "/" +
+        workingDate.getFullYear();
+    let time =
+        workingDate.getHours() +
+        ":" +
+        workingDate.getMinutes() +
+        ":" +
+        workingDate.getSeconds();
+
+    dateHTML.innerHTML = desc + ": " + date + " - " + time;
+    return dateHTML;
 }
 
 function createTrashButton(id) {
@@ -300,71 +297,15 @@ function toggleAction(id) {
         }
     }
 
-    if (task != null) {
-        let containerCurrentTodo = document.getElementById("current-tasks");
-        let containerFinishedTodo = document.getElementById("finished-tasks");
-
-        let moveFromList = -1;
-        let moveToList = -1;
-        if (!task.finished) {
-            moveFromList = containerCurrentTodo;
-            moveToList = containerFinishedTodo;
-            task.finished = true;
-
-            //FINISHED DATE ADDED
-            dateF = document.createElement("span");
-            dateF.className = "date-finished";
-            task.dateFinished = new Date();
-            let date =
-                task.dateFinished.getDate() +
-                "/" +
-                (task.dateFinished.getMonth() + 1) +
-                "/" +
-                task.dateFinished.getFullYear();
-            let time =
-                task.dateFinished.getHours() +
-                ":" +
-                task.dateFinished.getMinutes();
-            dateF.innerHTML = "Finished: <br>" + date + " - " + time;
-            task.otherInfo.appendChild(dateF);
-
-            task.actionButton.className = "undo-button";
-            task.actionButton.firstChild.className = "fas fa-times";
-        } else {
-            moveFromList = containerFinishedTodo;
-            moveToList = containerCurrentTodo;
-            task.finished = false;
-
-            task.otherInfo.removeChild(task.otherInfo.lastChild);
-
-            task.actionButton.className = "complete-button";
-            task.actionButton.firstChild.className = "fas fa-check";
-        }
-        // MOVE THE TASK TO THE OTHER LIST
-        if (moveFromList != -1) {
-            for (let i = 0; i < moveFromList.children.length; i++) {
-                if (moveFromList.children[i].id == task.id) {
-                    if (moveFromList.children[i].style.opacity == 0.5) {
-                        moveFromList.children[i].style.opacity = 1;
-                    } else {
-                        moveFromList.children[i].style.opacity = 0.5;
-                    }
-                    moveToList.appendChild(moveFromList.children[i]);
-                }
-            }
-
-            // RESORT THE LIST THAT THE ITEM MOVES TO
-            if (!task.finished) {
-                let currentFilter =
-                    document.getElementById("current-filter").value;
-                handleSortChange(true, currentFilter);
-            } else {
-                let finishedFilter =
-                    document.getElementById("finished-filter").value;
-                handleSortChange(false, finishedFilter);
-            }
-        }
+    if (task.finished) {
+        task.finished = false;
+        task.dateFinished = null;
+    } else {
+        task.finished = true;
+        task.dateFinished = new Date();
     }
+
+    renderHTML();
 }
 
 function deleteTask(id) {
@@ -376,24 +317,6 @@ function deleteTask(id) {
         }
     }
 
-    if (task != null) {
-        let containerCurrentTodo = document.getElementById("current-tasks");
-        let containerFinishedTodo = document.getElementById("finished-tasks");
-        let whichList = -1;
-
-        if (task.finished) {
-            whichList = containerFinishedTodo;
-        } else {
-            whichList = containerCurrentTodo;
-        }
-
-        if (whichList != -1) {
-            for (let i = 0; i < whichList.children.length; i++) {
-                if (whichList.children[i].id == task.id) {
-                    whichList.removeChild(whichList.children[i]);
-                }
-            }
-            todoList.splice(todoList.indexOf(task), 1);
-        }
-    }
+    todoList.splice(todoList.indexOf(task), 1);
+    renderHTML();
 }
