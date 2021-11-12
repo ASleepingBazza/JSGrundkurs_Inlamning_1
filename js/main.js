@@ -6,7 +6,7 @@ class TodoItem {
         this.description = desc;
         this.otherInfo = null;
         this.prio = prio;
-        this.dateAdded = new Date();
+        this.dateAdded = createDateString(new Date());
         this.dateFinished = null;
         this.finished = false;
     }
@@ -16,9 +16,10 @@ let idCounter = 0;
 let todoList = [];
 
 window.onload = function () {
-    createHardcodedTodoList();
+    todoList = getStoredList();
     initializeModal();
     initializeFilters();
+    renderHTML();
 };
 
 // MODAL
@@ -128,7 +129,6 @@ function createHardcodedTodoList() {
     todoList.push(todo2);
     todoList.push(todo3);
     todoList.push(todo4);
-    renderHTML();
 }
 
 // BUILD TASKS
@@ -147,6 +147,14 @@ function renderHTML() {
             containerCurrentTodo.appendChild(taskHTML);
         }
     }
+
+    // STORE THE LIST
+    //console.log("TODO: ", todoList);
+    localStorage.setItem("todoList", JSON.stringify(todoList));
+
+    console.log("BEFORE: ", todoList);
+    let temp = JSON.parse(localStorage.getItem("todoList"));
+    console.log("AFTER: ", temp);
 
     // WHEN ALL TASKS ARE ADDED: SORT THEM
     let currentFilter = document.getElementById("current-filter");
@@ -254,24 +262,13 @@ function createDateHTML(todoItem, desc) {
     let workingDate = null;
     if (desc == "Added") {
         workingDate = todoItem.dateAdded;
+        dateHTML.className = "date-current";
+        dateHTML.innerHTML = "Added: " + workingDate;
     } else {
         workingDate = todoItem.dateFinished;
+        dateHTML.className = "date-finished";
+        dateHTML.innerHTML = "Finished: " + workingDate;
     }
-    dateHTML.className = "date-finished";
-    let date =
-        workingDate.getDate() +
-        "/" +
-        workingDate.getMonth() +
-        "/" +
-        workingDate.getFullYear();
-    let time =
-        workingDate.getHours() +
-        ":" +
-        workingDate.getMinutes() +
-        ":" +
-        workingDate.getSeconds();
-
-    dateHTML.innerHTML = desc + ": " + date + " - " + time;
     return dateHTML;
 }
 
@@ -302,7 +299,7 @@ function toggleAction(id) {
         task.dateFinished = null;
     } else {
         task.finished = true;
-        task.dateFinished = new Date();
+        task.dateFinished = createDateString(new Date());
     }
 
     renderHTML();
@@ -319,4 +316,36 @@ function deleteTask(id) {
 
     todoList.splice(todoList.indexOf(task), 1);
     renderHTML();
+}
+
+// GET FROM LOCAL STORAGE
+function getStoredList() {
+    if ("todoList" in localStorage) {
+        return JSON.parse(localStorage.getItem("todoList"));
+    } else {
+        createHardcodedTodoList();
+        return todoList;
+    }
+}
+
+// DATE STRING CONSTRUCTION
+function createDateString(dateObject) {
+    let date =
+        padTo2Digits(dateObject.getUTCDate()) +
+        "/" +
+        padTo2Digits(dateObject.getUTCMonth()) +
+        "/" +
+        padTo2Digits(dateObject.getFullYear());
+    let time =
+        padTo2Digits(dateObject.getUTCHours()) +
+        ":" +
+        padTo2Digits(dateObject.getUTCMinutes()) +
+        ":" +
+        padTo2Digits(dateObject.getUTCSeconds());
+
+    let dateString = date + "   " + time;
+    return dateString;
+}
+function padTo2Digits(num) {
+    return num.toString().padStart(2, "0");
 }
