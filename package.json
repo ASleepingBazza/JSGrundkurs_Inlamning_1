@@ -1,19 +1,26 @@
 {
-  "name": "js_inlamning_1",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ASleepingBazza/JSGrundkurs_Inlamning_1.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ASleepingBazza/JSGrundkurs_Inlamning_1/issues"
-  },
-  "homepage": "https://github.com/ASleepingBazza/JSGrundkurs_Inlamning_1#readme"
+    "name": "js_inlamning_1",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "parcel src/index.html"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ASleepingBazza/JSGrundkurs_Inlamning_1.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ASleepingBazza/JSGrundkurs_Inlamning_1/issues"
+    },
+    "homepage": "https://github.com/ASleepingBazza/JSGrundkurs_Inlamning_1#readme",
+    "dependencies": {},
+    "devDependencies": {
+        "@parcel/transformer-sass": "^2.0.1",
+        "parcel": "^2.0.1",
+        "typescript": "^4.5.2"
+    }
 }
